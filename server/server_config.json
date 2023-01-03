@@ -1,0 +1,29 @@
+{
+    "server_member_ID": "0",
+    "sns_topic_server": "global-model-ready",
+    "s3_fl_model_registry": "flserverdatabucketcdk000",
+    "dynamodb_table_model_info": "fltaskscdk000", 
+    "starting_round_id": "0",
+    "num_clients_required": "2",
+    "num_client_epochs": "5",
+    "model_file_name": "MODEL.py",
+    "aggregation_alg": "FedAvg",
+    "fl_rounds": "8",
+    "timeout_seconds_per_fl_round": "1000",
+    "clients": 
+    [
+        {
+            "member_ID": "1",
+            "sqs_region_1": "us-east-1",
+            "client_queue_name_1": "clientsqs-us-east-1"
+        },
+        {
+            "member_ID": "2",
+            "across_account_id": "621734582882",
+            "sqs_region_2": "us-west-2",
+            "client_queue_name_2": "clientsqs-us-west-2"
+        }
+    ],
+    "secure_aggregation": "NO", 
+    "secure_aggregation_rounds": "1"
+}

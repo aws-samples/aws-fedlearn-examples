@@ -1,0 +1,8 @@
+{
+    "s3_fl_model_registry": "flserverdatabucketcdk000",
+    "dynamodb_table_model_info": "fltaskscdk000",
+    "member_ID": "1", 
+    "sqs_region": "us-east-1",
+    "client_sqs_name": "clientsqs-us-east-1"
+}
+
