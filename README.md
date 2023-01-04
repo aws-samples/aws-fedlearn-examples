@@ -2,7 +2,7 @@
 ## Deploying the FL server using AWS CDK:
 * Set up a Python [Cloud Development Kit](https://aws.amazon.com/cdk/)(CDK) development environment following https://cdkworkshop.com/
 * Run cdk from your PC to deploy the services at the FL server
-    * Under the directory `fedlearn-cdk-hcls` (containing the file `app.py`), run commands:
+    * Under the directory `aws-fedlearn-examples` (containing the file `app.py`), run commands:
         1. `cdk bootstrap aws://your-aws-account_id/your-aws-region` (replace `your-aws-account_id` by "AWS_account_A ID" and `your-aws-region` with your AWS account region)
         2. `python -m pip install -r requirements.txt`
         3. Install and start docker desktop on your PC 
@@ -38,7 +38,7 @@
 
 ## Destroy FL server resources after finished
 * Delete all files in the S3 bucket created by CDK
-* Under the directory `fedlearn-cdk-workshop` (containing the file `app.py`), run commands:
+* Under the directory `aws-fedlearn-examples` (containing the file `app.py`), run commands:
     * `cdk destroy`
 
 ## Useful commands
