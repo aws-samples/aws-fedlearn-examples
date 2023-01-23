@@ -1,4 +1,7 @@
-# Federated Learning Examples
+# Reinventing Federated Learning Operations on AWS
+## AWS reference architecture 
+![Build federated learning on AWS](images/awsarchitecture.PNG)
+
 ## Deploying the FL server using AWS CDK:
 * Set up a Python [Cloud Development Kit](https://aws.amazon.com/cdk/)(CDK) development environment following https://cdkworkshop.com/
 * Run cdk from your PC to deploy the services at the FL server
@@ -24,7 +27,7 @@
 * In SageMaker Studio, double click  `Client1_cdk/client1-auto.ipynb`, to open a notebook
 * In SageMaker Studio, double click  `Client2_cdk/client2-auto.ipynb`, to open a second notebook
 
-## Launching the FL server
+## Launch the FL server
 * Login "AWS_account_A"
 * Go to **Amazon Step Functions** (https://us-west-2.console.aws.amazon.com/states/home?region=us-west-2) service
 * Click the state machine created by CDK and click “Start execution”
