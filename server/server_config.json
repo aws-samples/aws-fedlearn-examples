@@ -1,8 +1,8 @@
 {
     "server_member_ID": "0",
     "sns_topic_server": "global-model-ready",
-    "s3_fl_model_registry": "flserverdatabucketcdk000",
-    "dynamodb_table_model_info": "fltaskscdk000", 
+    "s3_fl_model_registry": "flserverdatabucketcdk0602",
+    "dynamodb_table_model_info": "fltaskscdk0602", 
     "starting_round_id": "0",
     "num_clients_required": "2",
     "num_client_epochs": "5",
@@ -19,11 +19,8 @@
         },
         {
             "member_ID": "2",
-            "across_account_id": "621734582882",
             "sqs_region_2": "us-west-2",
             "client_queue_name_2": "clientsqs-us-west-2"
         }
-    ],
-    "secure_aggregation": "NO", 
-    "secure_aggregation_rounds": "1"
+    ]
 }

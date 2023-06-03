@@ -1,0 +1,210 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "ServerStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ServerStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ServerStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ServerStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/091b7e28317461fdc9da8c84e26efb776ea088459466baaf9f7a37b3d8f14e0d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ServerStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ServerStack.assets"
+      ],
+      "metadata": {
+        "/ServerStack/lambda_multiple_role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdamultiplerole315975A7"
+          }
+        ],
+        "/ServerStack/lambda_multiple_role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdamultipleroleDefaultPolicy4EA08A57"
+          }
+        ],
+        "/ServerStack/ServerFedAvgLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerFedAvgLambda036304A6"
+          }
+        ],
+        "/ServerStack/ServerFedAvgLambda/DynamoDBEventSource:ServerStackfltaskscdk06022C4F037C/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerFedAvgLambdaDynamoDBEventSourceServerStackfltaskscdk06022C4F037CDDB82E8B"
+          }
+        ],
+        "/ServerStack/flserverdatabucketcdk0602/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flserverdatabucketcdk060237DB133B"
+          }
+        ],
+        "/ServerStack/flserverdatabucketcdk0602/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flserverdatabucketcdk0602Policy1E76CAF8"
+          }
+        ],
+        "/ServerStack/flserverdatabucketcdk0602/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flserverdatabucketcdk0602AutoDeleteObjectsCustomResourceA1F12078"
+          }
+        ],
+        "/ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/ServerStack/fltaskscdk0602": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "fltaskscdk0602BEE5117E"
+            }
+          }
+        ],
+        "/ServerStack/fltaskscdk0602/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "fltaskscdk0602BEE5117E"
+          }
+        ],
+        "/ServerStack/lambda_sns_role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdasnsroleC5D00AD7"
+          }
+        ],
+        "/ServerStack/serverinitsns_lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "serverinitsnslambda4661DA90"
+          }
+        ],
+        "/ServerStack/global-model-ready": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "globalmodelready"
+          }
+        ],
+        "/ServerStack/afterAgg_lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "afterAgglambdaServiceRoleB9FC6D91"
+          }
+        ],
+        "/ServerStack/afterAgg_lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "afterAgglambda62CE9D5C"
+          }
+        ],
+        "/ServerStack/prepareNextRound_lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "prepareNextRoundlambdaServiceRoleA7CF9D99"
+          }
+        ],
+        "/ServerStack/prepareNextRound_lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "prepareNextRoundlambda4832300C"
+          }
+        ],
+        "/ServerStack/endTraining_lambda_role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "endTraininglambdarole039D456C"
+          }
+        ],
+        "/ServerStack/endTraining_lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "endTraininglambda08715873"
+          }
+        ],
+        "/ServerStack/FLServerStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FLServerStateMachineRoleE472C60A"
+          }
+        ],
+        "/ServerStack/FLServerStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FLServerStateMachineRoleDefaultPolicyAAC0FED3"
+          }
+        ],
+        "/ServerStack/FLServerStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FLServerStateMachine29BA3774"
+          }
+        ],
+        "/ServerStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ServerStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ServerStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ServerStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ServerStack"
+    }
+  }
+}

@@ -126,6 +126,7 @@ class ServerStack(Stack):
         fl_registry_s3 = s3.Bucket(self, s3_models,
             bucket_name=s3_models, 
             removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True
         )
         # Create a DynamoDB with Stream enabled to trigger serveraggregation_lambda
         fl_registry_dynamodb = dynamodb.Table(self, dynamodb_model_info,
@@ -145,7 +146,7 @@ class ServerStack(Stack):
             starting_position=_lambda.StartingPosition.TRIM_HORIZON,
             batch_size=5,
             bisect_batch_on_error=True,
-            retry_attempts=10
+            retry_attempts=0
         ))
 
         # Create a role for serverinitsns_lambda to access sns

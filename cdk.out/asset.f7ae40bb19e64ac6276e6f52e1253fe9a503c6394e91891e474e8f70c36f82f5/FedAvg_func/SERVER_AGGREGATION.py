@@ -125,7 +125,7 @@ def fedAvg(receivedNodes, roundId):
         s3 = boto3.resource('s3')           
         server_s3_address = os.environ['SERVER_S3_ADDRESS'] 
         s3.Bucket(server_s3_address).upload_file(lambda_temp_store, savedModelFileName)
-        return savedModelFileName, avg_TrainAcc[0], avg_TestAcc[0], avg_TrainLoss[0], avg_TestLoss[0]
+        return avg_TrainAcc[0], avg_TestAcc[0], avg_TrainLoss[0], avg_TestLoss[0], savedModelFileName
     
 def lambda_handler(event, context):
     # tasks_table_name, task_name
@@ -136,19 +136,19 @@ def lambda_handler(event, context):
     transactions = readFromFLServerTaskTable(os.environ['TASKS_TABLE_NAME'], task_name)
 
     # receive local models from required clients
-    local_model_info, roundId, tokens = receiveUpdatedModelsFromClients(transactions, task_name)
+    receivedNodes, roundId, tokens = receiveUpdatedModelsFromClients(transactions, task_name)
 
-    print(local_model_info)
+    print(receivedNodes)
 
     output = None
-    if (local_model_info != None):
+    if (receivedNodes != None):
         # aggregation updates
-        global_model_name, avg_TrainAcc, avg_TestAcc, avg_TrainLoss, avg_TestLoss = fedAvg(local_model_info, roundId)
+        avg_TrainAcc, avg_TestAcc, avg_TrainLoss, avg_TestLoss, savedModelFileName = fedAvg(receivedNodes, roundId)
 
         numClientsRequired = CONSTANTS.NOT_APPLICABLE_STRING
         numClientEpochs = CONSTANTS.NOT_APPLICABLE_STRING
 
-        for member in local_model_info.values():
+        for member in receivedNodes.values():
             if numClientEpochs  == CONSTANTS.NOT_APPLICABLE_STRING:
                 numClientEpochs = member['numClientEpochs']
             else: 
@@ -168,7 +168,7 @@ def lambda_handler(event, context):
                 'testAcc': str(avg_TestAcc), 
                 'trainLoss': str(avg_TrainLoss), 
                 'testLoss': str(avg_TestLoss), 
-                'weightsFile': str(global_model_name),
+                'weightsFile': str(savedModelFileName),
                 }
 
         step_client = boto3.client('stepfunctions')

@@ -1,0 +1,1366 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.257"
+        }
+      },
+      "ServerStack": {
+        "id": "ServerStack",
+        "path": "ServerStack",
+        "children": {
+          "lambda_multiple_role": {
+            "id": "lambda_multiple_role",
+            "path": "ServerStack/lambda_multiple_role",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/lambda_multiple_role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonSQSFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonSNSFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSLambdaExecute"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonS3FullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSStepFunctionsFullAccess"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.34.0"
+                }
+              },
+              "DefaultPolicy": {
+                "id": "DefaultPolicy",
+                "path": "ServerStack/lambda_multiple_role/DefaultPolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/lambda_multiple_role/DefaultPolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "dynamodb:ListStreams",
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            },
+                            {
+                              "Action": [
+                                "dynamodb:DescribeStream",
+                                "dynamodb:GetRecords",
+                                "dynamodb:GetShardIterator"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": {
+                                "Fn::GetAtt": [
+                                  "fltaskscdk0602BEE5117E",
+                                  "StreamArn"
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "lambdamultipleroleDefaultPolicy4EA08A57",
+                        "roles": [
+                          {
+                            "Ref": "lambdamultiplerole315975A7"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.34.0"
+            }
+          },
+          "ServerFedAvgLambda": {
+            "id": "ServerFedAvgLambda",
+            "path": "ServerStack/ServerFedAvgLambda",
+            "children": {
+              "AssetImage": {
+                "id": "AssetImage",
+                "path": "ServerStack/ServerFedAvgLambda/AssetImage",
+                "children": {
+                  "Staging": {
+                    "id": "Staging",
+                    "path": "ServerStack/ServerFedAvgLambda/AssetImage/Staging",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "Repository": {
+                    "id": "Repository",
+                    "path": "ServerStack/ServerFedAvgLambda/AssetImage/Repository",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ecr.RepositoryBase",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecr_assets.DockerImageAsset",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/ServerFedAvgLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "imageUri": {
+                        "Fn::Sub": "${AWS::AccountId}.dkr.ecr.${AWS::Region}.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-${AWS::AccountId}-${AWS::Region}:ccea41ac2a4e95c593023a58984998b2a5ff33f0935fa788f090614397f97548"
+                      }
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "lambdamultiplerole315975A7",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "SERVER_S3_ADDRESS": "flserverdatabucketcdk0602",
+                        "REQUIRED_NUM_CLIENTS": "2",
+                        "TASKS_TABLE_NAME": "fltaskscdk0602"
+                      }
+                    },
+                    "memorySize": 1000,
+                    "packageType": "Image",
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.34.0"
+                }
+              },
+              "DynamoDBEventSource:ServerStackfltaskscdk06022C4F037C": {
+                "id": "DynamoDBEventSource:ServerStackfltaskscdk06022C4F037C",
+                "path": "ServerStack/ServerFedAvgLambda/DynamoDBEventSource:ServerStackfltaskscdk06022C4F037C",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/ServerFedAvgLambda/DynamoDBEventSource:ServerStackfltaskscdk06022C4F037C/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::EventSourceMapping",
+                      "aws:cdk:cloudformation:props": {
+                        "functionName": {
+                          "Ref": "ServerFedAvgLambda036304A6"
+                        },
+                        "batchSize": 5,
+                        "bisectBatchOnFunctionError": true,
+                        "eventSourceArn": {
+                          "Fn::GetAtt": [
+                            "fltaskscdk0602BEE5117E",
+                            "StreamArn"
+                          ]
+                        },
+                        "maximumRetryAttempts": 0,
+                        "startingPosition": "TRIM_HORIZON"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnEventSourceMapping",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.EventSourceMapping",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.DockerImageFunction",
+              "version": "2.34.0"
+            }
+          },
+          "flserverdatabucketcdk0602": {
+            "id": "flserverdatabucketcdk0602",
+            "path": "ServerStack/flserverdatabucketcdk0602",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/flserverdatabucketcdk0602/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketName": "flserverdatabucketcdk0602",
+                    "tags": [
+                      {
+                        "key": "aws-cdk:auto-delete-objects",
+                        "value": "true"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.34.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "ServerStack/flserverdatabucketcdk0602/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/flserverdatabucketcdk0602/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "flserverdatabucketcdk060237DB133B"
+                        },
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "s3:DeleteObject*",
+                                "s3:GetBucket*",
+                                "s3:List*"
+                              ],
+                              "Effect": "Allow",
+                              "Principal": {
+                                "AWS": {
+                                  "Fn::GetAtt": [
+                                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                                    "Arn"
+                                  ]
+                                }
+                              },
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "flserverdatabucketcdk060237DB133B",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "flserverdatabucketcdk060237DB133B",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
+                  "version": "2.34.0"
+                }
+              },
+              "AutoDeleteObjectsCustomResource": {
+                "id": "AutoDeleteObjectsCustomResource",
+                "path": "ServerStack/flserverdatabucketcdk0602/AutoDeleteObjectsCustomResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "ServerStack/flserverdatabucketcdk0602/AutoDeleteObjectsCustomResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.34.0"
+            }
+          },
+          "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
+            "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "path": "ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.34.0"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.0"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "ServerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.34.0"
+            }
+          },
+          "fltaskscdk0602": {
+            "id": "fltaskscdk0602",
+            "path": "ServerStack/fltaskscdk0602",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/fltaskscdk0602/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "keySchema": [
+                      {
+                        "attributeName": "Task_Name",
+                        "keyType": "HASH"
+                      },
+                      {
+                        "attributeName": "Task_ID",
+                        "keyType": "RANGE"
+                      }
+                    ],
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "Task_Name",
+                        "attributeType": "S"
+                      },
+                      {
+                        "attributeName": "Task_ID",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "provisionedThroughput": {
+                      "readCapacityUnits": 5,
+                      "writeCapacityUnits": 5
+                    },
+                    "streamSpecification": {
+                      "streamViewType": "NEW_IMAGE"
+                    },
+                    "tableName": "fltaskscdk0602"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                  "version": "2.34.0"
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "ServerStack/fltaskscdk0602/ScalingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+              "version": "2.34.0"
+            }
+          },
+          "lambda_sns_role": {
+            "id": "lambda_sns_role",
+            "path": "ServerStack/lambda_sns_role",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/lambda_sns_role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonSQSFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonSNSFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSLambdaExecute"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.34.0"
+            }
+          },
+          "serverinitsns_lambda": {
+            "id": "serverinitsns_lambda",
+            "path": "ServerStack/serverinitsns_lambda",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ServerStack/serverinitsns_lambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ServerStack/serverinitsns_lambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ServerStack/serverinitsns_lambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/serverinitsns_lambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5bbe83755819920e6e1a94bd1e678a8fb0964501acfb17f57d098ce72ccedcc6.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "lambdasnsroleC5D00AD7",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "serverinitsns.lambda_handler",
+                    "runtime": "python3.9",
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.34.0"
+            }
+          },
+          "global-model-ready": {
+            "id": "global-model-ready",
+            "path": "ServerStack/global-model-ready",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+              "aws:cdk:cloudformation:props": {}
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+              "version": "2.34.0"
+            }
+          },
+          "Execution Failed": {
+            "id": "Execution Failed",
+            "path": "ServerStack/Execution Failed",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions.Fail",
+              "version": "2.34.0"
+            }
+          },
+          "Initalize server": {
+            "id": "Initalize server",
+            "path": "ServerStack/Initalize server",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.LambdaInvoke",
+              "version": "2.34.0"
+            }
+          },
+          "sns_topic": {
+            "id": "sns_topic",
+            "path": "ServerStack/sns_topic",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.TopicBase",
+              "version": "2.34.0"
+            }
+          },
+          "Notify clients": {
+            "id": "Notify clients",
+            "path": "ServerStack/Notify clients",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.SnsPublish",
+              "version": "2.34.0"
+            }
+          },
+          "afterAgg_lambda": {
+            "id": "afterAgg_lambda",
+            "path": "ServerStack/afterAgg_lambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "ServerStack/afterAgg_lambda/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/afterAgg_lambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.34.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "ServerStack/afterAgg_lambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ServerStack/afterAgg_lambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ServerStack/afterAgg_lambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/afterAgg_lambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5bbe83755819920e6e1a94bd1e678a8fb0964501acfb17f57d098ce72ccedcc6.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "afterAgglambdaServiceRoleB9FC6D91",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "afterAgg.lambda_handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.34.0"
+            }
+          },
+          "Next FL iteration": {
+            "id": "Next FL iteration",
+            "path": "ServerStack/Next FL iteration",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.LambdaInvoke",
+              "version": "2.34.0"
+            }
+          },
+          "prepareNextRound_lambda": {
+            "id": "prepareNextRound_lambda",
+            "path": "ServerStack/prepareNextRound_lambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "ServerStack/prepareNextRound_lambda/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/prepareNextRound_lambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.34.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "ServerStack/prepareNextRound_lambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ServerStack/prepareNextRound_lambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ServerStack/prepareNextRound_lambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/prepareNextRound_lambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5bbe83755819920e6e1a94bd1e678a8fb0964501acfb17f57d098ce72ccedcc6.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "prepareNextRoundlambdaServiceRoleA7CF9D99",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "prepareNextRound.lambda_handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.34.0"
+            }
+          },
+          "No: next FL iteration": {
+            "id": "No: next FL iteration",
+            "path": "ServerStack/No: next FL iteration",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.LambdaInvoke",
+              "version": "2.34.0"
+            }
+          },
+          "endTraining_lambda_role": {
+            "id": "endTraining_lambda_role",
+            "path": "ServerStack/endTraining_lambda_role",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/endTraining_lambda_role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonSNSFullAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSLambdaExecute"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.34.0"
+            }
+          },
+          "endTraining_lambda": {
+            "id": "endTraining_lambda",
+            "path": "ServerStack/endTraining_lambda",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ServerStack/endTraining_lambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ServerStack/endTraining_lambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ServerStack/endTraining_lambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/endTraining_lambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5bbe83755819920e6e1a94bd1e678a8fb0964501acfb17f57d098ce72ccedcc6.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "endTraininglambdarole039D456C",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "endTraining.lambda_handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.34.0"
+            }
+          },
+          "Yes: end training": {
+            "id": "Yes: end training",
+            "path": "ServerStack/Yes: end training",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.LambdaInvoke",
+              "version": "2.34.0"
+            }
+          },
+          "Satisfied?": {
+            "id": "Satisfied?",
+            "path": "ServerStack/Satisfied?",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions.Choice",
+              "version": "2.34.0"
+            }
+          },
+          "FLServerStateMachine": {
+            "id": "FLServerStateMachine",
+            "path": "ServerStack/FLServerStateMachine",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "ServerStack/FLServerStateMachine/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ServerStack/FLServerStateMachine/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "states.",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ".amazonaws.com"
+                                    ]
+                                  ]
+                                }
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.34.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "ServerStack/FLServerStateMachine/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ServerStack/FLServerStateMachine/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "lambda:InvokeFunction",
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "afterAgglambda62CE9D5C",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::GetAtt": [
+                                        "endTraininglambda08715873",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::GetAtt": [
+                                        "prepareNextRoundlambda4832300C",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::GetAtt": [
+                                        "serverinitsnslambda4661DA90",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "afterAgglambda62CE9D5C",
+                                              "Arn"
+                                            ]
+                                          },
+                                          ":*"
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "endTraininglambda08715873",
+                                              "Arn"
+                                            ]
+                                          },
+                                          ":*"
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "prepareNextRoundlambda4832300C",
+                                              "Arn"
+                                            ]
+                                          },
+                                          ":*"
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "serverinitsnslambda4661DA90",
+                                              "Arn"
+                                            ]
+                                          },
+                                          ":*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Action": "sns:Publish",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Ref": "globalmodelready"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "FLServerStateMachineRoleDefaultPolicyAAC0FED3",
+                            "roles": [
+                              {
+                                "Ref": "FLServerStateMachineRoleE472C60A"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.34.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.34.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.34.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ServerStack/FLServerStateMachine/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::StepFunctions::StateMachine",
+                  "aws:cdk:cloudformation:props": {
+                    "roleArn": {
+                      "Fn::GetAtt": [
+                        "FLServerStateMachineRoleE472C60A",
+                        "Arn"
+                      ]
+                    },
+                    "definitionString": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "{\"StartAt\":\"Initalize server\",\"States\":{\"Initalize server\":{\"Next\":\"Notify clients\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"Execution Failed\"}],\"Type\":\"Task\",\"TimeoutSeconds\":900,\"ResultSelector\":{\"taskresult.$\":\"$.Payload\"},\"Resource\":\"arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+                          {
+                            "Fn::GetAtt": [
+                              "serverinitsnslambda4661DA90",
+                              "Arn"
+                            ]
+                          },
+                          "\",\"Payload\":{\"sns_topic_server\":\"",
+                          {
+                            "Ref": "globalmodelready"
+                          },
+                          "\",\"sqs_region_1\":\"us-east-1\",\"client_queue_name_1\":\"clientsqs-us-east-1\",\"sqs_region_2\":\"us-west-2\",\"client_queue_name_2\":\"clientsqs-us-west-2\",\"roundId\":\"0\",\"member_ID\":\"0\",\"numClientsRequired\":\"2\",\"numClientEpochs\":\"5\",\"weightsFile\":\"MODEL.py\"}}},\"Notify clients\":{\"Next\":\"Next FL iteration\",\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"Execution Failed\"}],\"Type\":\"Task\",\"TimeoutSeconds\":1000,\"ResultPath\":\"$.taskresult\",\"Resource\":\"arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":states:::sns:publish.waitForTaskToken\",\"Parameters\":{\"TopicArn\":\"",
+                          {
+                            "Ref": "globalmodelready"
+                          },
+                          "\",\"Message\":{\"TaskToken.$\":\"$$.Task.Token\",\"Input.$\":\"$.taskresult\"}}},\"No: next FL iteration\":{\"Next\":\"Notify clients\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"TimeoutSeconds\":900,\"ResultSelector\":{\"taskresult.$\":\"$.Payload\"},\"Resource\":\"arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+                          {
+                            "Fn::GetAtt": [
+                              "prepareNextRoundlambda4832300C",
+                              "Arn"
+                            ]
+                          },
+                          "\",\"Payload\":{\"Input.$\":\"$\"}}},\"Satisfied?\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.iterator.continue\",\"StringEquals\":\"True\",\"Next\":\"No: next FL iteration\"}],\"Default\":\"Yes: end training\"},\"Next FL iteration\":{\"Next\":\"Satisfied?\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"Execution Failed\"}],\"Type\":\"Task\",\"ResultSelector\":{\"iterator.$\":\"$.Payload\"},\"Resource\":\"arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+                          {
+                            "Fn::GetAtt": [
+                              "afterAgglambda62CE9D5C",
+                              "Arn"
+                            ]
+                          },
+                          "\",\"Payload\":{\"Input.$\":\"$\",\"count_round\":\"8\",\"step_round\":\"1\"}}},\"Execution Failed\":{\"Type\":\"Fail\"},\"Yes: end training\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"TimeoutSeconds\":900,\"Resource\":\"arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+                          {
+                            "Fn::GetAtt": [
+                              "endTraininglambda08715873",
+                              "Arn"
+                            ]
+                          },
+                          "\",\"Payload\":{\"Input.$\":\"$\",\"sns_topic_server\":\"",
+                          {
+                            "Ref": "globalmodelready"
+                          },
+                          "\"}}}}}"
+                        ]
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_stepfunctions.CfnStateMachine",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_stepfunctions.StateMachine",
+              "version": "2.34.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "ServerStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "ServerStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "ServerStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.34.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.257"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.34.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.34.0"
+    }
+  }
+}
