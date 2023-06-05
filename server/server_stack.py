@@ -73,7 +73,7 @@ class ServerStack(Stack):
                                         )
                 cross_account_sqs_role.apply_removal_policy(RemovalPolicy.DESTROY) 
                 cross_account_sqs_role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
-                        'AmazonSQSFullAccess'
+                        'AmazonSQSReadOnlyAccess'
                         ))
 
         # Create a lambda function to be triggered by DynamoDB stream
@@ -81,22 +81,12 @@ class ServerStack(Stack):
           assumed_by=iam.ServicePrincipal("lambda.amazonaws.com")) 
         lambda_multiple_role.add_managed_policy(
             iam.ManagedPolicy.from_aws_managed_policy_name(
-                        'AmazonSQSFullAccess',
-            )
-        )
-        lambda_multiple_role.add_managed_policy(
-            iam.ManagedPolicy.from_aws_managed_policy_name(
-                        'AmazonSNSFullAccess',
-            )
-        )
-        lambda_multiple_role.add_managed_policy(
-            iam.ManagedPolicy.from_aws_managed_policy_name(
                         'AWSLambdaExecute',
             )
         )
         lambda_multiple_role.add_managed_policy(
             iam.ManagedPolicy.from_aws_managed_policy_name(
-                        'AmazonDynamoDBFullAccess',
+                        'AmazonDynamoDBReadOnlyAccess',
             )
         )
         lambda_multiple_role.add_managed_policy(
@@ -123,7 +113,7 @@ class ServerStack(Stack):
         )
 
         # Create S3 as FL registry to store models
-        fl_registry_s3 = s3.Bucket(self, s3_models,
+        s3.Bucket(self, s3_models,
             bucket_name=s3_models, 
             removal_policy=RemovalPolicy.DESTROY,
             auto_delete_objects=True
