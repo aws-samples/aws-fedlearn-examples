@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-import os
 import aws_cdk as cdk
 from server.server_stack import ServerStack
+
+from aws_cdk import Aspects
+from cdk_nag import AwsSolutionsChecks
 
 app = cdk.App()
 ServerStack(app, "ServerStack",
@@ -21,5 +23,8 @@ ServerStack(app, "ServerStack",
 
     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
     )
+
+# Add the cdk-nag AwsSolutions Pack.
+Aspects.of(app).add(AwsSolutionsChecks())
 
 app.synth()

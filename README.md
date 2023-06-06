@@ -8,6 +8,7 @@
     * Under the directory `aws-fedlearn-examples` (containing the file `app.py`), run commands:
         1. `cdk bootstrap aws://your-aws-account_id/your-aws-region` (replace `your-aws-account_id` by "AWS_account_A ID" and `your-aws-region` with your AWS account region)
         2. `python -m pip install -r requirements.txt`
+        3. `python -m pip install -U cdk_nag`  
         3. Install and start docker desktop on your PC 
         4. `cdk synth`
         5. `cdk deploy`

@@ -6,3 +6,4 @@ clients/Client1_cdk/models/.ipynb_checkpoints
 clients/Client2_cdk/models/.ipynb_checkpoints
 clients/.DS_Store
 server/__init__.py
+cdk.out
