@@ -17,7 +17,6 @@ from aws_cdk.aws_sns import CfnTopic
 from aws_cdk.aws_lambda_event_sources import DynamoEventSource
 from cdk_nag import NagSuppressions 
 import aws_cdk.aws_logs as logs
-import aws_cdk.aws_kms as kms
 
 class ServerStack(Stack):
 
