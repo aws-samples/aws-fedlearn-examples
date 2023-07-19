@@ -234,7 +234,7 @@ class ServerStack(Stack):
                                                     "sns:Publish",
                                                     "sns:Subscribe",
                                                     "sns:AddPermission",
-                                                    "sns:CreateTopic",
+                                                    "sns:CreateTopic"
                                                     ],
                                             resources=["*"]
                                         )]
@@ -259,7 +259,8 @@ class ServerStack(Stack):
 
         # StepFunctions steps definition
         # Create a topic for sns to publish and sqs to subscribe
-        topic_global = CfnTopic(self, "global-model-ready")
+        topic_global = CfnTopic(self, 
+                                "global-model-ready")
         topic_arn = topic_global.ref
         # Remediate AwsSolutions-SNS2
         NagSuppressions.add_resource_suppressions(topic_global, [
@@ -325,7 +326,7 @@ class ServerStack(Stack):
                                         "logs:CreateLogStream",
                                         "logs:PutLogEvents",
                                         ],
-                                resources=["*"]
+                                resources=['*']
                             )    
                 ])    
         afterAgg_lambda_role.attach_inline_policy(afterAgg_lambda_policy)
@@ -371,7 +372,7 @@ class ServerStack(Stack):
                                 resources=["*"]
                             )    
                 ])    
-        afterAgg_lambda_role.attach_inline_policy(prepareNextRound_lambda_policy)
+        prepareNextRound_lambda_role.attach_inline_policy(prepareNextRound_lambda_policy)
         # Remediate AwsSolutions-IAM5 
         NagSuppressions.add_resource_suppressions(prepareNextRound_lambda_policy, [
             {
@@ -385,7 +386,7 @@ class ServerStack(Stack):
             runtime=_lambda.Runtime.PYTHON_3_10,
             code=_lambda.Code.from_asset('lambdas'),
             handler='prepareNextRound.lambda_handler',
-            role=afterAgg_lambda_role,
+            role=prepareNextRound_lambda_role,
         )
         prepareNextRound_step = _aws_stepfunctions_tasks.LambdaInvoke(
             self, "No: next FL iteration",

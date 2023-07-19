@@ -1,3 +1,4 @@
+# This code repo is intended for evaluation and demo. 
 # Reinventing Federated Learning Operations on AWS
 ## AWS reference architecture 
 ![Build federated learning on AWS](images/awsarchitecture.PNG)
